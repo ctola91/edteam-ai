@@ -73,3 +73,14 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+# install
+
+```bash
+npx nuxi@latest init <project-name>
+```
+
+## nuxt ui
+```bash
+npx nuxi@latest module add ui
+```
