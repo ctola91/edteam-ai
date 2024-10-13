@@ -84,3 +84,13 @@ npx nuxi@latest init <project-name>
 ```bash
 npx nuxi@latest module add ui
 ```
+
+## Variables
+```bash
+NUXT_API_URL=YOUR_API_URL
+NUXT_API_KEY=YOUR_API_KEY
+```
+
+## docs
+
+[https://ai.google.dev/gemini-api/docs?authuser=2&hl=es-419](https://ai.google.dev/gemini-api/docs?authuser=2&hl=es-419)
