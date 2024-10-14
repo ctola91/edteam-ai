@@ -85,6 +85,11 @@ npx nuxi@latest init <project-name>
 npx nuxi@latest module add ui
 ```
 
+## pinia
+```bash
+npx nuxi@latest module add pinia
+```
+
 ## Variables
 ```bash
 NUXT_API_URL=YOUR_API_URL
