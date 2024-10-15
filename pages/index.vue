@@ -4,7 +4,7 @@ import { useGeminiStore } from '~/store/gemini';
 const questions = ref([])
 
 const gemini = useGeminiStore()
-const { geminiData: data, loading } = storeToRefs(gemini)
+const { data, loading } = storeToRefs(gemini)
 
 onMounted(async () => {
   await gemini.loadGeminiData()
