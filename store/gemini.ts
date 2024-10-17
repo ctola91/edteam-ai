@@ -33,9 +33,38 @@ export const useGeminiStore = defineStore('gemini', () => {
     }
   };
 
+  const buildQuestions = async (payload: any) => {
+    try {
+      loading.value = true;
+      const res = await $fetch(`/api/generate`, {
+        method: "POST",
+        body: payload
+      });
+      // console.log(error)
+
+      // console.log(res.data);
+
+      if (!res.data)
+        loading.value = false;
+      
+      let result = res.data.replace('```json', '').replace('```', '')
+      geminiData.value = JSON.parse(result);
+      data.value = geminiData.value
+      loading.value = false;
+
+      return data.value;
+    } catch (e) {
+      console.log(e);
+      loading.value = false;
+      return e;
+    }
+  };
+  
+
   return {
     data,
     loading,
     loadGeminiData,
+    buildQuestions
   };
 })
