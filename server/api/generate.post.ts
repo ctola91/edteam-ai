@@ -4,9 +4,11 @@ import { category, format, PROMPT, topic } from '../utils/constants'
 const genAI = new GoogleGenerativeAI(process.env.NUXT_API_KEY)
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash'})
 
-const prompt = `${PROMPT} ${topic} de ${category} ${format}`
+let prompt = `${PROMPT} ${topic} de ${category} ${format}`
 
 export default defineEventHandler(async event => {
+  const body = await readBody(event)
+  prompt = `${PROMPT} ${body.topic} de ${body.category} ${format}`
   const result  = await model.generateContent(prompt)
 
   return {
