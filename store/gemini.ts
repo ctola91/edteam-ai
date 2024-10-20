@@ -1,8 +1,11 @@
-import { category } from './../server/utils/constants';
+import { CATEGORIES, TOPICS } from './../utils/constants';
 import { useStorage } from '@vueuse/core'
 
 const geminiData = ref();
 const loading = ref(false);
+
+const categories = ref(CATEGORIES)
+const topics = ref(TOPICS)
 
 export const useGeminiStore = defineStore('gemini', () => {
   const data = useStorage('data_gemini', {})
@@ -59,11 +62,12 @@ export const useGeminiStore = defineStore('gemini', () => {
       return e;
     }
   };
-  
 
   return {
     data,
     loading,
+    topics,
+    categories,
     loadGeminiData,
     buildQuestions
   };

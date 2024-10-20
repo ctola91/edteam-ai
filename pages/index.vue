@@ -2,7 +2,6 @@
 import Logo from "/logo.png"
 </script>
 <template>
-  <UContainer as="div" class="p-4 flex justify-center align-center">
     <UCard class="w-80">
       <div>
         <img :src="Logo" alt="logo" width="320" />
@@ -14,5 +13,4 @@ import Logo from "/logo.png"
         </div>
       </template>
     </UCard>
-  </UContainer>
 </template>
