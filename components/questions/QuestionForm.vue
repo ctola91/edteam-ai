@@ -5,7 +5,7 @@ import type { FormSubmitEvent } from '#ui/types'
 import { useGeminiStore } from '~/store/gemini';
 
 const gemini = useGeminiStore()
-const { loading, categories, topics } = storeToRefs(gemini)
+const { loading, categories, topics, categorySelected, topicSelected } = storeToRefs(gemini)
 
 const customCategory = ref('')
 const customTopic = ref('')
@@ -55,6 +55,13 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
   reset()
 }
+
+// watch(state, (val) => {
+//   if(val) {
+//     categorySelected.value = val.category
+//     topicSelected.value = val.topic
+//   }
+// }, { deep: true})
 </script>
 <template>
   <div class="flex flex-col gap-2">
