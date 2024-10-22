@@ -8,7 +8,7 @@ import Logo from "/logo.png"
       </div>
       <template #footer>
         <div class="flex flex-row justify-between gap-2 flex-wrap">
-          <UButton size="lg" color="indigo" label="Iniciar" block to="/game" />
+          <UButton size="lg" color="indigo" label="Iniciar" block to="/start-game" />
           <UButton size="lg" color="gray" label="Generar Preguntas" block to="questions" />          
         </div>
       </template>

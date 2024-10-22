@@ -1,7 +1,7 @@
 import { CATEGORIES, TOPICS } from './../utils/constants';
 import { useStorage } from '@vueuse/core'
 
-const geminiData = ref();
+const geminiData = ref([]);
 const loading = ref(false);
 
 const categories = ref(CATEGORIES)

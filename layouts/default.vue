@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center align-center gap-8">
-    <UVerticalNavigation v-if="route.fullPath !== '/'" :links="links" />
+    <UVerticalNavigation v-if="route.fullPath !== '/' && route.fullPath !== '/start-game'" :links="links" />
     <slot />
   </div>
 </template>
@@ -11,11 +11,11 @@ const route = useRoute()
 const links = [
   {
     label: 'Iniciar Juego',
-    icon: 'i-heroicons-home',
-    to: '/game'
+    icon: 'i-heroicons-puzzle-piece',
+    to: '/start-game'
   }, {
     label: 'Generar Preguntas',
-    icon: 'i-heroicons-chart-bar',
+    icon: 'i-heroicons-question-mark-circle',
     to: '/questions'
   }
 ]
