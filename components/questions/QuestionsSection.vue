@@ -5,7 +5,6 @@ const gemini = useGeminiStore()
 const { data, loading, categorySelected, topicSelected } = storeToRefs(gemini)
 
 const buildQuestions = computed(() => {
-  console.log(data.value)
   if (data.value) {
     if (categorySelected.value !== '' && topicSelected.value !== '') {
       if (data.value.categories) {

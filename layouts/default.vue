@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center align-center gap-8">
-    <UVerticalNavigation v-if="route.fullPath !== '/' && route.fullPath !== '/start-game'" :links="links" />
+    <UVerticalNavigation v-if="route.fullPath !== '/' && route.fullPath !== '/game'" :links="links" />
     <slot />
   </div>
 </template>

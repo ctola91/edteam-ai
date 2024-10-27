@@ -6,7 +6,11 @@ const geminiData = ref([]);
 const loading = ref(false);
 
 export const useGeminiStore = defineStore("gemini", () => {
-  const data = useStorage("data_gemini", null);
+  const data = useStorage("data_gemini", {
+    categories: [],
+    category: "",
+    topic: "",
+  });
 
   const categorySelected = useStorage("category", "");
   const topicSelected = useStorage("topic", "");
@@ -19,9 +23,6 @@ export const useGeminiStore = defineStore("gemini", () => {
       const res = await $fetch(`/api/generate`, {
         method: "GET",
       });
-      // console.log(error)
-
-      // console.log(res.data);
 
       if (!res.data) loading.value = false;
 
@@ -38,6 +39,45 @@ export const useGeminiStore = defineStore("gemini", () => {
     }
   };
 
+  function parseData(gdata) {
+    data.value.category = categorySelected.value;
+    data.value.topic = topicSelected.value;
+    if (data.value.categories.length === 0) {
+      data.value.categories.push({
+        id: categorySelected.value,
+        topics: [
+          {
+            id: topicSelected.value,
+            data: gdata,
+          },
+        ],
+      });
+    } else {
+      const index = data.value.categories.findIndex((i) => i.id === categorySelected.value);
+      // Update category
+      if (index > -1) {
+        const cat = data.value.categories[index];
+        const topicIndex = cat.topics.findIndex((i) => i.id === topicSelected.value);
+        if (topicIndex > -1) {
+          cat.topics[topicIndex].data = gdata;
+          // data.value.categories[index].topics[topicIndex].data = gdata
+        } else {
+          // data.value.categories[index].topics.push({
+          cat.topics.push({
+            id: topicSelected.value,
+            data: gdata,
+          });
+        }
+      } else {
+        // register new category
+        data.value.categories.push({
+          id: categorySelected.value,
+          topics: [{ id: topicSelected.value, data: gdata }],
+        });
+      }
+    }
+  }
+
   const buildQuestions = async (payload: any) => {
     try {
       loading.value = true;
@@ -47,29 +87,14 @@ export const useGeminiStore = defineStore("gemini", () => {
       });
 
       if (!res.data) loading.value = false;
-      categorySelected.value = payload.category
-      topicSelected.value = payload.topic
+      categorySelected.value = payload.category;
+      topicSelected.value = payload.topic;
 
       let result = res.data.replace("```json", "").replace("```", "");
       geminiData.value = JSON.parse(result);
-      data.value = {
-        category: payload.category,
-        topic: payload.topic,
-        categories: [
-          {
-            id: payload.category,
-            topics: [
-              {
-                id: payload.topic,
-                data: geminiData.value,
-              },
-            ],
-          },
-        ],
-      };
-      
-      console.log(data.value)
-
+      if (data.value) {
+        parseData(geminiData.value);
+      }
       loading.value = false;
 
       return data.value;
