@@ -6,6 +6,7 @@ import { useGeminiStore } from '~/store/gemini';
 
 const gemini = useGeminiStore()
 const { loading, categories, topics, categorySelected, topicSelected } = storeToRefs(gemini)
+const toast = useToast()
 
 const customCategory = ref('')
 const customTopic = ref('')
@@ -51,7 +52,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     category: event.data.category
   }
   console.log(form)
-  await gemini.buildQuestions(form)
+  const res = await gemini.buildQuestions(form)
+
+  if(!res)
+    toast.add({ title: 'Ha ocurrido un error al generar las preguntas, intente de nuevo'})
 
   reset()
 }

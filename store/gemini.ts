@@ -4,6 +4,7 @@ import { useStorage } from "@vueuse/core";
 
 const geminiData = ref([]);
 const loading = ref(false);
+const correctAnswers = ref<(boolean | undefined)[]>([]);
 
 export const useGeminiStore = defineStore("gemini", () => {
   const data = useStorage("data_gemini", {
@@ -16,6 +17,7 @@ export const useGeminiStore = defineStore("gemini", () => {
   const topicSelected = useStorage("topic", "");
   const categories = useStorage("categories", CATEGORIES);
   const topics = useStorage("topics", TOPICS);
+  const points = useStorage("points", 0);
 
   const loadGeminiData = async () => {
     try {
@@ -53,11 +55,15 @@ export const useGeminiStore = defineStore("gemini", () => {
         ],
       });
     } else {
-      const index = data.value.categories.findIndex((i) => i.id === categorySelected.value);
+      const index = data.value.categories.findIndex(
+        (i) => i.id === categorySelected.value
+      );
       // Update category
       if (index > -1) {
         const cat = data.value.categories[index];
-        const topicIndex = cat.topics.findIndex((i) => i.id === topicSelected.value);
+        const topicIndex = cat.topics.findIndex(
+          (i) => i.id === topicSelected.value
+        );
         if (topicIndex > -1) {
           cat.topics[topicIndex].data = gdata;
           // data.value.categories[index].topics[topicIndex].data = gdata
@@ -86,7 +92,10 @@ export const useGeminiStore = defineStore("gemini", () => {
         body: payload,
       });
 
-      if (!res.data) loading.value = false;
+      if (!res.data) {
+        loading.value = false;
+        return false;
+      }
       categorySelected.value = payload.category;
       topicSelected.value = payload.topic;
 
@@ -112,6 +121,8 @@ export const useGeminiStore = defineStore("gemini", () => {
     categories,
     categorySelected,
     topicSelected,
+    correctAnswers,
+    points,
     loadGeminiData,
     buildQuestions,
   };
