@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import ConfettiExplosion from "vue-confetti-explosion";
 import QuestionTimer from '~/components/questions/QuestionTimer.vue';
 import { useGeminiStore } from '~/store/gemini';
 
+const router = useRouter()
 const store = useGeminiStore()
-const { categorySelected, topicSelected, data, correctAnswers, points } = storeToRefs(store)
+const { categorySelected, topicSelected, data, points } = storeToRefs(store)
 
 const questionIndex = ref(0)
 const isFinished = ref(false)
@@ -32,6 +34,12 @@ const selectAnswer = (question, res) => {
 const onTimeFinished = () => {
   questionIndex.value++
 }
+
+watch(questions, async (val) => {
+  console.log(val)
+  if(val.length === 0)
+    await router.push('/')
+})
 </script>
 
 <template>
@@ -41,6 +49,7 @@ const onTimeFinished = () => {
       <p class="text-sm">Su Puntaje es:</p>
       <p class="text-9xl"> {{ points }}</p>
     </UCard>
+    <ConfettiExplosion :particleCount="200" :force="0.3" />
   </template>
   <template v-else>
     <template v-for="(question, index) in questions" :key="question.pregunta">
