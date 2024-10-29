@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import QuestionTimer from '~/components/questions/QuestionTimer.vue';
 import { useGeminiStore } from '~/store/gemini';
 
 const store = useGeminiStore()
@@ -27,13 +28,18 @@ const selectAnswer = (question, res) => {
     isFinished.value = true
   }
 }
+
+const onTimeFinished = () => {
+  questionIndex.value++
+}
 </script>
 
 <template>
   <template v-if="isFinished">
     <UCard>
-      <p>Felicidades Terminaste</p>
-      <p>Su Puntaje es: {{ points }}</p>
+      <p class="text-lg">Felicidades Terminaste</p>
+      <p class="text-sm">Su Puntaje es:</p>
+      <p class="text-9xl"> {{ points }}</p>
     </UCard>
   </template>
   <template v-else>
@@ -45,6 +51,8 @@ const selectAnswer = (question, res) => {
               <h1 class="text-4xl text-center font-bold">{{ question.pregunta }}</h1>
             </div>
           </UCard>
+
+          <QuestionTimer @send-timer-data="onTimeFinished" />
           <div class="flex gap-2 justify-between w-3/4 m-auto">
             <UButton color="gray" size="xl" v-for="respuesta in question.respuestas" :key="respuesta"
               @click="selectAnswer(question, respuesta)">
