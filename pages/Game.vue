@@ -40,16 +40,27 @@ watch(questions, async (val) => {
   if(val.length === 0)
     await router.push('/')
 })
+
+const uiFinishCard = {
+  mode: 'override',   
+  base: 'w-[320px]',
+  body: {
+    base: 'flex flex-col gap-2 justify-center align-center text-center'
+  }
+}
 </script>
 
 <template>
   <template v-if="isFinished">
-    <UCard>
-      <p class="text-lg">Felicidades Terminaste</p>
+    <div class="flex flex-col gap-3">
+    <UCard :ui="uiFinishCard">
+      <p class="text-lg">Felicidades</p>
       <p class="text-sm">Su Puntaje es:</p>
       <p class="text-9xl"> {{ points }}</p>
     </UCard>
+    <UButton block  label="Empezar de nuevo" to="/start-game"/>
     <ConfettiExplosion :particleCount="200" :force="0.3" />
+  </div>
   </template>
   <template v-else>
     <template v-for="(question, index) in questions" :key="question.pregunta">
@@ -62,7 +73,7 @@ watch(questions, async (val) => {
           </UCard>
 
           <QuestionTimer @send-timer-data="onTimeFinished" />
-          <div class="flex gap-2 justify-between w-3/4 m-auto">
+          <div class="flex gap-4 m-auto">
             <UButton color="gray" size="xl" v-for="respuesta in question.respuestas" :key="respuesta"
               @click="selectAnswer(question, respuesta)">
               {{ respuesta }}
