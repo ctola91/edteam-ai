@@ -99,3 +99,10 @@ NUXT_API_KEY=YOUR_API_KEY
 ## docs
 
 [https://ai.google.dev/gemini-api/docs?authuser=2&hl=es-419](https://ai.google.dev/gemini-api/docs?authuser=2&hl=es-419)
+
+## vercel
+
+```sh
+pnpm i -g vercel
+
+```
