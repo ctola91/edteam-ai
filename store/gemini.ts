@@ -1,4 +1,3 @@
-import { topic } from "./../server/utils/constants";
 import { CATEGORIES, TOPICS } from "./../utils/constants";
 import { useStorage } from "@vueuse/core";
 
