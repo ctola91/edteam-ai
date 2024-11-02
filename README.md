@@ -103,6 +103,6 @@ NUXT_API_KEY=YOUR_API_KEY
 ## vercel
 
 ```sh
-pnpm i -g vercel
+npm i -g vercel
 
 ```
